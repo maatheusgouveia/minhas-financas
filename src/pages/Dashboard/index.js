@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { getBtc, getEth, getLtc } from "../../services/bitcointrade";
+import React, { useEffect, useState } from "react";
+import { Doughnut } from "react-chartjs-2";
 
 import {
 	Header,
@@ -10,26 +10,52 @@ import {
 	Footer,
 	Total,
 } from "./styles";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
-	const [BTC, setBtcQuotation] = useState();
-	const [ETH, setEthQuotation] = useState();
-	const [LTC, setLtcQuotation] = useState();
+	const tickers = useSelector((state) => state.tickers.data);
 
-	const loadQuotation = useCallback(async () => {
-		const btcQuotation = await getBtc();
-		setBtcQuotation(btcQuotation.data);
+	const [portfolio, setPortfolio] = useState([]);
+	const [total, setTotal] = useState(0);
 
-		const ethQuotation = await getEth();
-		setEthQuotation(ethQuotation.data);
-
-		const ltcQuotation = await getLtc();
-		setLtcQuotation(ltcQuotation.data);
-	}, []);
+	const data = {
+		labels: portfolio.map((coin) => coin.symbol),
+		datasets: [
+			{
+				data: portfolio.map(
+					(coin) => coin.quote.BRL.price * coin.custody
+				),
+				backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+				hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+			},
+		],
+	};
 
 	useEffect(() => {
-		loadQuotation();
-	}, [loadQuotation]);
+		const data = [
+			{ symbol: "BTC", custody: 0.00379897 },
+			{ symbol: "ETH", custody: 0.07765854 },
+			{ symbol: "LTC", custody: 0.04665144 },
+			{ symbol: "NANO", custody: 2.000802 },
+		];
+
+		setPortfolio(
+			data.map((stock) => ({
+				...tickers[stock.symbol],
+				custody: stock.custody,
+			}))
+		);
+	}, [tickers]);
+
+	useEffect(() => {
+		portfolio[0] &&
+			setTotal(
+				portfolio.reduce(
+					(acc, coin) => acc + coin.quote.BRL.price * coin.custody,
+					0
+				)
+			);
+	}, [portfolio]);
 
 	return (
 		<Container>
@@ -39,101 +65,46 @@ export default function Dashboard() {
 
 			<Content>
 				<Item>
-					<h1>Bitcoin BTC</h1>
-					<div>
-						<div>
-							<strong>Cotação</strong>
-							<div>
-								{BTC &&
-									Intl.NumberFormat("pt-BR", {
-										style: "currency",
-										currency: "BRL",
-									}).format(BTC.data.sell)}
-							</div>
-						</div>
-
-						<div>
-							<strong>Patrimônio</strong>
-							<div>
-								{BTC &&
-									Intl.NumberFormat("pt-BR", {
-										style: "currency",
-										currency: "BRL",
-									}).format(BTC.data.sell * 0.00142262)}
-							</div>
-						</div>
-					</div>
+					<Doughnut legend={{ display: false }} data={data} />
 				</Item>
 
-				<Item>
-					<h1>Ethereum ETH</h1>
-					<div>
+				{portfolio.map((coin) => (
+					<Item key={coin.symbol}>
+						<h1>{`${coin.name} ${coin.symbol}`}</h1>
 						<div>
-							<strong>Cotação</strong>
 							<div>
-								{ETH &&
-									Intl.NumberFormat("pt-BR", {
+								<strong>Cotação</strong>
+								<div>
+									{Intl.NumberFormat("pt-BR", {
 										style: "currency",
 										currency: "BRL",
-									}).format(ETH.data.sell)}
+									}).format(coin.quote.BRL.price)}
+								</div>
 							</div>
-						</div>
 
-						<div>
-							<strong>Patrimônio</strong>
 							<div>
-								{ETH &&
-									Intl.NumberFormat("pt-BR", {
+								<strong>Patrimônio</strong>
+								<div>
+									{Intl.NumberFormat("pt-BR", {
 										style: "currency",
 										currency: "BRL",
-									}).format(ETH.data.sell * 0.07765854)}
+									}).format(
+										coin.quote.BRL.price * coin.custody
+									)}
+								</div>
 							</div>
 						</div>
-					</div>
-				</Item>
-
-				<Item>
-					<h1>Litecoin LTC</h1>
-					<div>
-						<div>
-							<strong>Cotação</strong>
-							<div>
-								{LTC &&
-									Intl.NumberFormat("pt-BR", {
-										style: "currency",
-										currency: "BRL",
-									}).format(LTC.data.sell)}
-							</div>
-						</div>
-
-						<div>
-							<strong>Patrimônio</strong>
-							<div>
-								{LTC &&
-									Intl.NumberFormat("pt-BR", {
-										style: "currency",
-										currency: "BRL",
-									}).format(LTC.data.sell * 0.04665144)}
-							</div>
-						</div>
-					</div>
-				</Item>
+					</Item>
+				))}
 			</Content>
 
 			<Footer>
 				<Total>
-					Patrimônio total:
-					{BTC &&
-						ETH &&
-						LTC &&
-						Intl.NumberFormat("pt-BR", {
-							style: "currency",
-							currency: "BRL",
-						}).format(
-							BTC.data.sell * 0.00379897 +
-								ETH.data.sell * 0.07765854 +
-								LTC.data.sell * 0.04665144
-						)}
+					Patrimônio total:{" "}
+					{Intl.NumberFormat("pt-BR", {
+						style: "currency",
+						currency: "BRL",
+					}).format(total)}
 				</Total>
 			</Footer>
 		</Container>

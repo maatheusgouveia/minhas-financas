@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
+import "react-toastify/dist/ReactToastify.css";
+
 const GlobalStyle = createGlobalStyle`
 	* {
 		margin: 0;

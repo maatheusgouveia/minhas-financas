@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 export const Header = styled.header`
+	display: flex;
 	background: #fff;
 	width: 100%;
-	text-align: center;
+	height: 80px;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const Title = styled.h1``;
@@ -18,19 +21,21 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-	display: flex;
+	display: grid;
 	flex-direction: row;
+	grid-template-columns: repeat(3, 1fr);
 `;
 
 export const Item = styled.div`
 	text-align: center;
 	display: flex;
 	flex-direction: column;
-	width: 250px;
-	height: 250px;
+	width: 230px;
+	height: 230px;
 	background: #fff;
 	margin: 30px;
 	border-radius: 4px;
+	justify-content: center;
 
 	div strong {
 		display: block;
@@ -54,7 +59,11 @@ export const Footer = styled.footer`
 	display: flex;
 	background: #fff;
 	width: 100%;
-	text-align: center;
+	height: 80px;
+	align-items: center;
+	justify-content: flex-start;
 `;
 
-export const Total = styled.h2``;
+export const Total = styled.h2`
+	margin-left: 20px;
+`;
