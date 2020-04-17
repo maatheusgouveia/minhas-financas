@@ -1,23 +1,54 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: #000;
+	height: 100%;
+`;
+
 export const Header = styled.header`
 	display: flex;
-	background: #fff;
+	background: #111116;
 	width: 100%;
 	height: 80px;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
+	color: #fff;
+	padding-left: 30px;
+	padding-right: 30px;
 `;
 
 export const Title = styled.h1``;
 
-export const Container = styled.div`
+export const Profile = styled.div`
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	background: #111;
-	height: 100%;
+	flex-direction: row;
+	justify-content: center;
+
+	button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #333;
+		width: 40px;
+		height: 40px;
+		border-radius: 3px;
+		border: none;
+		color: #fff;
+
+		svg {
+			height: 25px;
+			width: 25px;
+		}
+	}
+
+	div {
+		display: flex;
+		flex-direction: column;
+		margin-left: 15px;
+	}
 `;
 
 export const Content = styled.div`
@@ -57,13 +88,14 @@ export const Item = styled.div`
 
 export const Footer = styled.footer`
 	display: flex;
-	background: #fff;
+	background: #111116;
 	width: 100%;
 	height: 80px;
 	align-items: center;
 	justify-content: flex-start;
+	color: #fff;
 `;
 
 export const Total = styled.h2`
-	margin-left: 20px;
+	margin-left: 30px;
 `;

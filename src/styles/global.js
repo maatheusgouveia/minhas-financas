@@ -15,6 +15,10 @@ const GlobalStyle = createGlobalStyle`
 		height: 100%;
 	}
 
+	button {
+		cursor: pointer;
+	}
+
 	body {
 		-webkit-font-smoothing: antialiased;
 	}

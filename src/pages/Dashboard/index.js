@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { MdNotifications } from "react-icons/md";
 
 import {
 	Header,
 	Title,
+	Profile,
 	Container,
 	Content,
 	Item,
-	Footer,
-	Total,
+	// Footer,
+	// Total,
 } from "./styles";
 import { useSelector } from "react-redux";
 
@@ -61,6 +63,21 @@ export default function Dashboard() {
 		<Container>
 			<Header>
 				<Title>Minhas finanças</Title>
+				<Profile>
+					<button type="button">
+						<MdNotifications />
+					</button>
+					<div>
+						<strong>Matheus Gouveia</strong>
+						<small>
+							Patrimônio total:{" "}
+							{Intl.NumberFormat("pt-BR", {
+								style: "currency",
+								currency: "BRL",
+							}).format(total)}
+						</small>
+					</div>
+				</Profile>
 			</Header>
 
 			<Content>
@@ -98,7 +115,7 @@ export default function Dashboard() {
 				))}
 			</Content>
 
-			<Footer>
+			{/* <Footer>
 				<Total>
 					Patrimônio total:{" "}
 					{Intl.NumberFormat("pt-BR", {
@@ -106,7 +123,7 @@ export default function Dashboard() {
 						currency: "BRL",
 					}).format(total)}
 				</Total>
-			</Footer>
+			</Footer> */}
 		</Container>
 	);
 }
