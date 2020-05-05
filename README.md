@@ -7,7 +7,7 @@ Em breve será possível fazer o lançamento das aplicações diretamente no apl
 
 Posteriormente será feita a integração com outras API's, como a da B3 para ações, fundos de investimentos, FII's e renda fixa.
 
-![](./tmp/screenshot.png)
+![](./.github/assets/screenshot.png)
 
 ## TO - DO
 

@@ -54,17 +54,29 @@ export const Profile = styled.div`
 export const Content = styled.div`
 	display: grid;
 	flex-direction: row;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(4, 1fr);
+
+	@media (max-width: 1100px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media (max-width: 780px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 500px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
 `;
 
 export const Item = styled.div`
-	text-align: center;
 	display: flex;
+	text-align: center;
 	flex-direction: column;
-	width: 230px;
+	min-width: 230px;
 	height: 230px;
-	background: #fff;
 	margin: 30px;
+	background: #fff;
 	border-radius: 4px;
 	justify-content: center;
 
