@@ -18,6 +18,7 @@ export const Header = styled.header`
 	color: #fff;
 	padding-left: 30px;
 	padding-right: 30px;
+	margin-bottom: 80px;
 `;
 
 export const Title = styled.h1``;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Doughnut, Line } from "react-chartjs-2";
 import { MdNotifications } from "react-icons/md";
 
@@ -18,7 +18,6 @@ export default function Dashboard() {
 	const tickers = useSelector((state) => state.tickers.data);
 
 	const [portfolio, setPortfolio] = useState([]);
-	const [total, setTotal] = useState(0);
 
 	const data = {
 		labels: portfolio.map((coin) => coin.symbol),
@@ -49,15 +48,14 @@ export default function Dashboard() {
 		);
 	}, [tickers]);
 
-	useEffect(() => {
-		portfolio[0] &&
-			setTotal(
-				portfolio.reduce(
-					(acc, coin) => acc + coin.quote.BRL.price * coin.custody,
-					0
-				)
-			);
-	}, [portfolio]);
+	const total = useMemo(
+		() =>
+			portfolio?.reduce(
+				(acc, coin) => acc + coin.quote.BRL.price * coin.custody,
+				0
+			),
+		[portfolio]
+	);
 
 	return (
 		<Container>
@@ -70,7 +68,7 @@ export default function Dashboard() {
 					<div>
 						<strong>Matheus Gouveia</strong>
 						<small>
-							Patrimônio total:{" "}
+							Patrimônio total:
 							{Intl.NumberFormat("pt-BR", {
 								style: "currency",
 								currency: "BRL",
