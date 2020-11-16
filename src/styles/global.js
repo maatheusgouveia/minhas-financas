@@ -11,9 +11,9 @@ const GlobalStyle = createGlobalStyle`
 		font-family: 'Roboto', sans-serif;
 	}
 
-	/* html, body, #root {
-		height: 100%;
-	} */
+	html, body, #root {
+		height: 100vh;
+	}
 
 	button {
 		cursor: pointer;
