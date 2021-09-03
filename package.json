@@ -10,7 +10,7 @@
     "chart.js": "^2.9.3",
     "formik": "^2.1.4",
     "history": "^4.10.1",
-    "immer": "^6.0.3",
+    "immer": "^9.0.6",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
